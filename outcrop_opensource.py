@@ -114,9 +114,9 @@ neighborhood = arcpy.sa.NbrRectangle(5,5, "CELL")
 result_fs1 = arcpy.sa.FocalStatistics(critfc,neighborhood,"Mean")
 result_fs1.save('result_fs5')
 '''
-#Where  mean of each cell is greater than 70% or 95% label that as rock cover
+#Where  mean of each cell is greater than 70% (or 95%) label that as rock cover
 result_np =arcpy.RasterToNumPyArray(arcpy.sa.Raster('result_fs5'))
-result_95percentile = np.percentile(result_np, 95) 
+result_70percentile = np.percentile(result_np, 70) 
 
-outCon2 = arcpy.sa.Con(arcpy.Raster('result_fs5') > result_95percentile, 1,0)
+outCon2 = arcpy.sa.Con(arcpy.Raster('result_fs5') > result_70percentile, 1,0)
 outCon2.save(env.workspace+"//"+r"rockcover")
